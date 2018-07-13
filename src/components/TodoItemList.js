@@ -21,11 +21,12 @@ class TodoItemList extends Component {
         const { todos, onToggle, onRemove } = this.props;
         const todoList = todos.map(
             //  함수의 파라미터 부분에서 비구조화 할당을 하여 객체 내부의 값들을 따로 레퍼런스를 만들어주었습니다.
-            ({ id, text, checked }) => (
+            ({ id, text, checked, color }) => (
                 <TodoItem
                     id={id}
                     text={text}
                     checked={checked}
+                    color={color}
                     onToggle={onToggle}
                     onRemove={onRemove}
                     //배열을 렌더링 할 때에는 key 값이 꼭 있어야해요. 

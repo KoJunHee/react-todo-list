@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import TodoListTemplate from './components/TodoListTemplate';
 import Form from './components/Form'
 import TodoItemList from './components/TodoItemList';
+import Palette from './components/Palette';
+
+
+const colors = ['#343a40', '#f03e3e', '#12b886', '#228ae6'];
 
 class App extends Component {
 
@@ -15,9 +19,10 @@ class App extends Component {
     input: '',
     todos: [
       { id: 0, text: ' 리엑트 복습', checked: false },
-      { id: 1, text: ' 알고리즘', checked: true },
-      { id: 2, text: ' 구현', checked: false },
-    ]
+      { id: 1, text: ' 프로젝트 구현', checked: true },
+      { id: 2, text: ' 코드 리뷰', checked: false }
+    ],
+    color: '#343a40'
   }
 
   handleChange = (e) => {
@@ -28,13 +33,14 @@ class App extends Component {
 
   // concat 을 사용하여 배열안에 데이터를 추가했습니다
   handleCreate = () => {
-    const { input, todos } = this.state;
+    const { input, todos, color } = this.state;
     this.setState({
       input: '', //input 비우고
       todos: todos.concat({ // concat 을 사용하여 배열에 추가
         id: this.id++,
         text: input,
-        checked: false
+        checked: false,
+        color
       })
     });
   }
@@ -74,9 +80,16 @@ class App extends Component {
     })
   }
 
+  //color을 변경하는 메소드
+  handleSelectColor = (color) => {
+    this.setState({
+      color
+    })
+  }
+
   render() {
 
-    const { input, todos } = this.state;
+    const { input, todos, color } = this.state;
 
     // 이렇게 비구조화 할당을 했습니다. 
     // 이렇게 함으로서, 
@@ -88,25 +101,30 @@ class App extends Component {
       handleCreate,
       handleKeyPress,
       handleToggle,
-      handleRemove
+      handleRemove,
+      handleSelectColor
     } = this;
 
+    
+
     return (
-      <TodoListTemplate form={(
-        <Form
-          value={input}
-          onKeyPress={handleKeyPress}
-          onChange={handleChange}
-          onCreate={handleCreate}
-        />
-      )}>
-      
+      <TodoListTemplate
+        form={(
+          <Form
+            value={input}
+            onKeyPress={handleKeyPress}
+            onChange={handleChange}
+            onCreate={handleCreate}
+            color={color}
+          />
+        )}
+
+        palette={(
+          <Palette colors={colors} selected={color} onSelect={handleSelectColor} />
+        )} >
         {/* todos 안에 있는 객체들을 화면에 보여주기 위해선, 
       todos 배열을 컴포넌트 배열로 변환해주어야 합니다 */}
-        <TodoItemList
-          todos={todos}
-          onToggle={handleToggle}
-          onRemove={handleRemove} />
+        <TodoItemList todos={todos} onToggle={handleToggle} onRemove={handleRemove} />
       </TodoListTemplate >
     );
   }
