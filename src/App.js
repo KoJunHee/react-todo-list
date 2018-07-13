@@ -14,9 +14,9 @@ class App extends Component {
   state = {
     input: '',
     todos: [
-      { id: 0, text: ' 리엑트 소개', checked: false },
-      { id: 1, text: ' 리엑트 소개', checked: true },
-      { id: 2, text: ' 리엑트 소개', checked: false },
+      { id: 0, text: ' 리엑트 복습', checked: false },
+      { id: 1, text: ' 알고리즘', checked: true },
+      { id: 2, text: ' 구현', checked: false },
     ]
   }
 
@@ -31,8 +31,7 @@ class App extends Component {
     const { input, todos } = this.state;
     this.setState({
       input: '', //input 비우고
-      // concat 을 사용하여 배열에 추가
-      todos: todos.concat({
+      todos: todos.concat({ // concat 을 사용하여 배열에 추가
         id: this.id++,
         text: input,
         checked: false
@@ -78,6 +77,7 @@ class App extends Component {
   render() {
 
     const { input, todos } = this.state;
+
     // 이렇게 비구조화 할당을 했습니다. 
     // 이렇게 함으로서, 
     // this.handleChange, this.handleCreate, this.handleKeyPress 
@@ -100,6 +100,7 @@ class App extends Component {
           onCreate={handleCreate}
         />
       )}>
+      
         {/* todos 안에 있는 객체들을 화면에 보여주기 위해선, 
       todos 배열을 컴포넌트 배열로 변환해주어야 합니다 */}
         <TodoItemList
